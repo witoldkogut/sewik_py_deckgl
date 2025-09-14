@@ -1,0 +1,1346 @@
+[
+  {
+    "filename": "accidents_2018_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 42259,
+    "severity_distribution": {
+      "0": 40111,
+      "1": 1143,
+      "2": 821,
+      "3": 184
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 28639,
+    "severity_distribution": {
+      "0": 27675,
+      "1": 464,
+      "2": 345,
+      "3": 155
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._LUBELSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 21282,
+    "severity_distribution": {
+      "0": 20067,
+      "1": 532,
+      "2": 519,
+      "3": 164
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._LUBUSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 12115,
+    "severity_distribution": {
+      "0": 11452,
+      "2": 321,
+      "1": 270,
+      "3": 72
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._MAZOWIECKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 71890,
+    "severity_distribution": {
+      "0": 67917,
+      "1": 2820,
+      "2": 732,
+      "3": 421
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 34652,
+    "severity_distribution": {
+      "0": 31277,
+      "1": 2162,
+      "2": 1008,
+      "3": 205
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._OPOLSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 10868,
+    "severity_distribution": {
+      "0": 10165,
+      "1": 405,
+      "2": 228,
+      "3": 70
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._PODKARPACKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 19859,
+    "severity_distribution": {
+      "0": 18391,
+      "1": 1070,
+      "2": 284,
+      "3": 114
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._PODLASKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 14148,
+    "severity_distribution": {
+      "0": 13476,
+      "2": 300,
+      "1": 283,
+      "3": 89
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._POMORSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 29326,
+    "severity_distribution": {
+      "0": 26829,
+      "1": 1781,
+      "2": 583,
+      "3": 133
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 17418,
+    "severity_distribution": {
+      "0": 16137,
+      "1": 738,
+      "2": 424,
+      "3": 119
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 38967,
+    "severity_distribution": {
+      "0": 35740,
+      "1": 1956,
+      "2": 1023,
+      "3": 248
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 20474,
+    "severity_distribution": {
+      "0": 19312,
+      "1": 637,
+      "2": 407,
+      "3": 118
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._ŁÓDZKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 31726,
+    "severity_distribution": {
+      "0": 27971,
+      "1": 2485,
+      "2": 1053,
+      "3": 217
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._ŚLĄSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 57761,
+    "severity_distribution": {
+      "0": 54539,
+      "1": 2073,
+      "2": 939,
+      "3": 210
+    }
+  },
+  {
+    "filename": "accidents_2018_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2018,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 14200,
+    "severity_distribution": {
+      "0": 13000,
+      "1": 745,
+      "2": 336,
+      "3": 119
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 44283,
+    "severity_distribution": {
+      "0": 42355,
+      "1": 960,
+      "2": 777,
+      "3": 191
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 29232,
+    "severity_distribution": {
+      "0": 28306,
+      "1": 407,
+      "2": 329,
+      "3": 190
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._LUBELSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 21622,
+    "severity_distribution": {
+      "0": 20483,
+      "2": 514,
+      "1": 467,
+      "3": 158
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._LUBUSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 12664,
+    "severity_distribution": {
+      "0": 12004,
+      "2": 339,
+      "1": 242,
+      "3": 79
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._MAZOWIECKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 73632,
+    "severity_distribution": {
+      "0": 69856,
+      "1": 2569,
+      "2": 776,
+      "3": 431
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 36899,
+    "severity_distribution": {
+      "0": 33763,
+      "1": 2004,
+      "2": 964,
+      "3": 168
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._OPOLSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 11413,
+    "severity_distribution": {
+      "0": 10802,
+      "1": 367,
+      "2": 175,
+      "3": 69
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._PODKARPACKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 20099,
+    "severity_distribution": {
+      "0": 18650,
+      "1": 994,
+      "2": 309,
+      "3": 146
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._PODLASKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 14618,
+    "severity_distribution": {
+      "0": 14033,
+      "2": 268,
+      "1": 222,
+      "3": 95
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._POMORSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 30900,
+    "severity_distribution": {
+      "0": 28603,
+      "1": 1636,
+      "2": 510,
+      "3": 151
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 17441,
+    "severity_distribution": {
+      "0": 16223,
+      "1": 701,
+      "2": 422,
+      "3": 95
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 39484,
+    "severity_distribution": {
+      "0": 35605,
+      "1": 2494,
+      "2": 1128,
+      "3": 257
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 21839,
+    "severity_distribution": {
+      "0": 20625,
+      "1": 659,
+      "2": 441,
+      "3": 114
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._ŁÓDZKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 33517,
+    "severity_distribution": {
+      "0": 30169,
+      "1": 2192,
+      "2": 936,
+      "3": 220
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._ŚLĄSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 61128,
+    "severity_distribution": {
+      "0": 58163,
+      "1": 1879,
+      "2": 898,
+      "3": 188
+    }
+  },
+  {
+    "filename": "accidents_2019_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2019,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 14492,
+    "severity_distribution": {
+      "0": 13436,
+      "1": 640,
+      "2": 296,
+      "3": 120
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 37324,
+    "severity_distribution": {
+      "0": 35746,
+      "1": 817,
+      "2": 608,
+      "3": 153
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 24720,
+    "severity_distribution": {
+      "0": 23899,
+      "1": 396,
+      "2": 298,
+      "3": 127
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._LUBELSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 17834,
+    "severity_distribution": {
+      "0": 16903,
+      "2": 407,
+      "1": 378,
+      "3": 146
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._LUBUSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 10810,
+    "severity_distribution": {
+      "0": 10203,
+      "2": 305,
+      "1": 233,
+      "3": 69
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._MAZOWIECKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 60997,
+    "severity_distribution": {
+      "0": 58060,
+      "1": 1914,
+      "2": 641,
+      "3": 382
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 29949,
+    "severity_distribution": {
+      "0": 27685,
+      "1": 1318,
+      "2": 801,
+      "3": 145
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._OPOLSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 9373,
+    "severity_distribution": {
+      "0": 8887,
+      "1": 280,
+      "2": 146,
+      "3": 60
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._PODKARPACKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 16900,
+    "severity_distribution": {
+      "0": 15769,
+      "1": 786,
+      "2": 219,
+      "3": 126
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._PODLASKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 11725,
+    "severity_distribution": {
+      "0": 11295,
+      "2": 185,
+      "1": 172,
+      "3": 73
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._POMORSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 25820,
+    "severity_distribution": {
+      "0": 23972,
+      "1": 1240,
+      "2": 462,
+      "3": 146
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 14802,
+    "severity_distribution": {
+      "0": 13762,
+      "1": 537,
+      "2": 402,
+      "3": 101
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 33512,
+    "severity_distribution": {
+      "0": 30704,
+      "1": 1678,
+      "2": 930,
+      "3": 200
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 18709,
+    "severity_distribution": {
+      "0": 17784,
+      "1": 434,
+      "2": 397,
+      "3": 94
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._ŁÓDZKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 28728,
+    "severity_distribution": {
+      "0": 26292,
+      "1": 1503,
+      "2": 731,
+      "3": 202
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._ŚLĄSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 49827,
+    "severity_distribution": {
+      "0": 47444,
+      "1": 1452,
+      "2": 761,
+      "3": 170
+    }
+  },
+  {
+    "filename": "accidents_2020_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2020,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 12415,
+    "severity_distribution": {
+      "0": 11590,
+      "1": 471,
+      "2": 262,
+      "3": 92
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 41303,
+    "severity_distribution": {
+      "0": 39573,
+      "1": 978,
+      "2": 586,
+      "3": 166
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 26964,
+    "severity_distribution": {
+      "0": 26169,
+      "1": 384,
+      "2": 297,
+      "3": 114
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._LUBELSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 20741,
+    "severity_distribution": {
+      "0": 19849,
+      "2": 396,
+      "1": 369,
+      "3": 127
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._LUBUSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 11193,
+    "severity_distribution": {
+      "0": 10653,
+      "1": 292,
+      "2": 185,
+      "3": 63
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._MAZOWIECKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 66690,
+    "severity_distribution": {
+      "0": 63608,
+      "1": 2163,
+      "2": 574,
+      "3": 345
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 33792,
+    "severity_distribution": {
+      "0": 31553,
+      "1": 1314,
+      "2": 787,
+      "3": 138
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._OPOLSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 10723,
+    "severity_distribution": {
+      "0": 10187,
+      "1": 299,
+      "2": 158,
+      "3": 79
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._PODKARPACKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 19119,
+    "severity_distribution": {
+      "0": 17902,
+      "1": 918,
+      "2": 212,
+      "3": 87
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._PODLASKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 13172,
+    "severity_distribution": {
+      "0": 12739,
+      "2": 201,
+      "1": 160,
+      "3": 72
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._POMORSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 28323,
+    "severity_distribution": {
+      "0": 26549,
+      "1": 1252,
+      "2": 412,
+      "3": 110
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 16427,
+    "severity_distribution": {
+      "0": 15507,
+      "1": 491,
+      "2": 346,
+      "3": 83
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 36039,
+    "severity_distribution": {
+      "0": 33630,
+      "1": 1367,
+      "2": 828,
+      "3": 214
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 20105,
+    "severity_distribution": {
+      "0": 19164,
+      "1": 513,
+      "2": 345,
+      "3": 83
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._ŁÓDZKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 30498,
+    "severity_distribution": {
+      "0": 28192,
+      "1": 1308,
+      "2": 825,
+      "3": 173
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._ŚLĄSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 55942,
+    "severity_distribution": {
+      "0": 53739,
+      "1": 1388,
+      "2": 676,
+      "3": 139
+    }
+  },
+  {
+    "filename": "accidents_2021_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2021,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 13200,
+    "severity_distribution": {
+      "0": 12421,
+      "1": 467,
+      "2": 231,
+      "3": 81
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 35568,
+    "severity_distribution": {
+      "0": 33700,
+      "1": 1149,
+      "2": 588,
+      "3": 131
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 22439,
+    "severity_distribution": {
+      "0": 21670,
+      "1": 412,
+      "2": 266,
+      "3": 91
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._LUBELSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 17917,
+    "severity_distribution": {
+      "0": 17132,
+      "1": 358,
+      "2": 313,
+      "3": 114
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._LUBUSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 10355,
+    "severity_distribution": {
+      "0": 9857,
+      "1": 258,
+      "2": 188,
+      "3": 52
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._MAZOWIECKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 57746,
+    "severity_distribution": {
+      "0": 54850,
+      "1": 2137,
+      "2": 487,
+      "3": 272
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 28990,
+    "severity_distribution": {
+      "0": 26764,
+      "1": 1363,
+      "2": 768,
+      "3": 95
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._OPOLSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 9712,
+    "severity_distribution": {
+      "0": 9274,
+      "1": 255,
+      "2": 128,
+      "3": 55
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._PODKARPACKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 15824,
+    "severity_distribution": {
+      "0": 14762,
+      "1": 779,
+      "2": 198,
+      "3": 85
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._PODLASKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 11399,
+    "severity_distribution": {
+      "0": 11066,
+      "2": 149,
+      "1": 121,
+      "3": 63
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._POMORSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 23631,
+    "severity_distribution": {
+      "0": 22042,
+      "1": 1116,
+      "2": 383,
+      "3": 90
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 14145,
+    "severity_distribution": {
+      "0": 13315,
+      "1": 417,
+      "2": 338,
+      "3": 75
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 31470,
+    "severity_distribution": {
+      "0": 29171,
+      "1": 1287,
+      "2": 816,
+      "3": 196
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 17358,
+    "severity_distribution": {
+      "0": 16477,
+      "1": 515,
+      "2": 295,
+      "3": 71
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._ŁÓDZKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 25428,
+    "severity_distribution": {
+      "0": 23220,
+      "1": 1312,
+      "2": 740,
+      "3": 156
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._ŚLĄSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 49151,
+    "severity_distribution": {
+      "0": 47167,
+      "1": 1219,
+      "2": 616,
+      "3": 149
+    }
+  },
+  {
+    "filename": "accidents_2022_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2022,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 11338,
+    "severity_distribution": {
+      "0": 10689,
+      "1": 379,
+      "2": 205,
+      "3": 65
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 34817,
+    "severity_distribution": {
+      "0": 33025,
+      "2": 873,
+      "1": 807,
+      "3": 112
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 22259,
+    "severity_distribution": {
+      "0": 21475,
+      "1": 400,
+      "2": 276,
+      "3": 108
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._LUBELSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 17877,
+    "severity_distribution": {
+      "0": 17083,
+      "1": 368,
+      "2": 319,
+      "3": 107
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._LUBUSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 10463,
+    "severity_distribution": {
+      "0": 10021,
+      "1": 219,
+      "2": 165,
+      "3": 58
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._MAZOWIECKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 58444,
+    "severity_distribution": {
+      "0": 55650,
+      "1": 2048,
+      "2": 455,
+      "3": 291
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 29526,
+    "severity_distribution": {
+      "0": 27317,
+      "1": 1366,
+      "2": 738,
+      "3": 105
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._OPOLSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 9494,
+    "severity_distribution": {
+      "0": 9030,
+      "1": 270,
+      "2": 153,
+      "3": 41
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._PODKARPACKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 16399,
+    "severity_distribution": {
+      "0": 15205,
+      "1": 907,
+      "2": 201,
+      "3": 86
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._PODLASKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 11240,
+    "severity_distribution": {
+      "0": 10893,
+      "2": 161,
+      "1": 119,
+      "3": 67
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._POMORSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 24260,
+    "severity_distribution": {
+      "0": 22701,
+      "1": 1110,
+      "2": 357,
+      "3": 92
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 14169,
+    "severity_distribution": {
+      "0": 13408,
+      "1": 353,
+      "2": 337,
+      "3": 71
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 32300,
+    "severity_distribution": {
+      "0": 29983,
+      "1": 1336,
+      "2": 807,
+      "3": 174
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 17354,
+    "severity_distribution": {
+      "0": 16571,
+      "1": 451,
+      "2": 249,
+      "3": 83
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._ŁÓDZKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 24957,
+    "severity_distribution": {
+      "0": 22830,
+      "1": 1342,
+      "2": 636,
+      "3": 149
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._ŚLĄSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 50889,
+    "severity_distribution": {
+      "0": 49001,
+      "1": 1183,
+      "2": 588,
+      "3": 117
+    }
+  },
+  {
+    "filename": "accidents_2023_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2023,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 11030,
+    "severity_distribution": {
+      "0": 10362,
+      "1": 385,
+      "2": 212,
+      "3": 71
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._DOLNOŚLĄSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. DOLNOŚLĄSKIE",
+    "accident_count": 36677,
+    "severity_distribution": {
+      "0": 34794,
+      "1": 945,
+      "2": 809,
+      "3": 129
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._KUJAWSKO-POMORSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. KUJAWSKO-POMORSKIE",
+    "accident_count": 24342,
+    "severity_distribution": {
+      "0": 23554,
+      "1": 459,
+      "2": 219,
+      "3": 110
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._LUBELSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. LUBELSKIE",
+    "accident_count": 18371,
+    "severity_distribution": {
+      "0": 17526,
+      "1": 444,
+      "2": 288,
+      "3": 113
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._LUBUSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. LUBUSKIE",
+    "accident_count": 11150,
+    "severity_distribution": {
+      "0": 10688,
+      "1": 212,
+      "2": 192,
+      "3": 58
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._MAZOWIECKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. MAZOWIECKIE",
+    "accident_count": 63186,
+    "severity_distribution": {
+      "0": 60320,
+      "1": 2051,
+      "2": 547,
+      "3": 268
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._MAŁOPOLSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. MAŁOPOLSKIE",
+    "accident_count": 31628,
+    "severity_distribution": {
+      "0": 29154,
+      "1": 1523,
+      "2": 843,
+      "3": 108
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._OPOLSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. OPOLSKIE",
+    "accident_count": 10257,
+    "severity_distribution": {
+      "0": 9763,
+      "1": 315,
+      "2": 140,
+      "3": 39
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._PODKARPACKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. PODKARPACKIE",
+    "accident_count": 17151,
+    "severity_distribution": {
+      "0": 16136,
+      "1": 754,
+      "2": 164,
+      "3": 97
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._PODLASKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. PODLASKIE",
+    "accident_count": 11761,
+    "severity_distribution": {
+      "0": 11414,
+      "2": 173,
+      "1": 122,
+      "3": 52
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._POMORSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. POMORSKIE",
+    "accident_count": 27371,
+    "severity_distribution": {
+      "0": 25685,
+      "1": 1151,
+      "2": 430,
+      "3": 105
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._WARMIŃSKO-MAZURSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. WARMIŃSKO-MAZURSKIE",
+    "accident_count": 15236,
+    "severity_distribution": {
+      "0": 14478,
+      "2": 382,
+      "1": 307,
+      "3": 69
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._WIELKOPOLSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. WIELKOPOLSKIE",
+    "accident_count": 36092,
+    "severity_distribution": {
+      "0": 33623,
+      "1": 1382,
+      "2": 894,
+      "3": 193
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._ZACHODNIOPOMORSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. ZACHODNIOPOMORSKIE",
+    "accident_count": 17884,
+    "severity_distribution": {
+      "0": 17137,
+      "1": 424,
+      "2": 239,
+      "3": 84
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._ŁÓDZKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. ŁÓDZKIE",
+    "accident_count": 26184,
+    "severity_distribution": {
+      "0": 23950,
+      "1": 1392,
+      "2": 712,
+      "3": 130
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._ŚLĄSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. ŚLĄSKIE",
+    "accident_count": 52939,
+    "severity_distribution": {
+      "0": 51153,
+      "1": 1106,
+      "2": 568,
+      "3": 112
+    }
+  },
+  {
+    "filename": "accidents_2024_WOJ._ŚWIĘTOKRZYSKIE.geojson",
+    "year": 2024,
+    "voivodeship": "WOJ. ŚWIĘTOKRZYSKIE",
+    "accident_count": 11866,
+    "severity_distribution": {
+      "0": 11201,
+      "1": 384,
+      "2": 219,
+      "3": 62
+    }
+  }
+]
