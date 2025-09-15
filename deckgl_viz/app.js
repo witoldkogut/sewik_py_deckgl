@@ -17,9 +17,18 @@ class AccidentVisualization {
     // Persistent tooltip state
     this.persistentTooltip = null;
     this.selectedFeature = null;
+    this.selectedFeatureId = null; // Track selected feature ID
     
     // Current language
     this.currentLanguage = 'pl';
+    
+    // Severity visibility state
+    this.severityVisibility = {
+      'Fatal': true,
+      'Serious': true,
+      'Slight': true,
+      'DamageOnly': true
+    };
     
     // Translations
     this.translations = {
@@ -60,7 +69,12 @@ class AccidentVisualization {
         slight: 'Slight',
         other: 'Damage Only',
         viewInSewik: 'View in SEWIK Database',
-        clickToPin: 'Click to pin tooltip'
+        clickToPin: 'Click to pin tooltip',
+        showCategory: 'Show',
+        hideCategory: 'Hide',
+        severityControls: 'Severity Controls:',
+        allVisible: 'All Visible',
+        allHidden: 'All Hidden'
       },
       pl: {
         title: 'Wypadki Drogowe w Polsce',
@@ -95,11 +109,16 @@ class AccidentVisualization {
         date: 'Data:',
         casualties: 'Ofiary:',
         fatal: 'Śmiertelne',
-        serious: 'Ciężko ranne',
-        slight: 'Lekko ranne',
-        other: 'Tylko szkody',
+        serious: 'Ciężko ranni',
+        slight: 'Lekko ranni',
+        other: 'Bez obrażeń',
         viewInSewik: 'Zobacz w bazie SEWIK',
-        clickToPin: 'Kliknij aby przypiąć tooltip'
+        clickToPin: 'Kliknij aby przypiąć',
+        showCategory: 'Pokaż',
+        hideCategory: 'Ukryj',
+        severityControls: 'Kategorie wypadków:',
+        allVisible: 'Wszystkie Widoczne',
+        allHidden: 'Wszystkie Ukryte'
       }
     };
     
@@ -129,22 +148,34 @@ class AccidentVisualization {
       'openstreetmap': {
         name: 'OpenStreetMap',
         url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors'
+        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors',
+        bodyColor: '#f0f0f0',
+        mapDependentBorderColorSelected:  'rgba(0, 0, 0, 1)',
+        mapDependentBorderColor:  'rgba(70, 70, 70, 1)',
       },
       'satellite': {
         name: 'Satellite',
         url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        attribution: 'Esri, Maxar, GeoEye, Earthstar Geographics'
+        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>Esri, Maxar, GeoEye, Earthstar Geographics',
+        bodyColor: '#1a1a1a',
+        mapDependentBorderColorSelected:  'rgba(255, 255, 255, 1)',
+        mapDependentBorderColor:  'rgba(167, 167, 167, 1)',
       },
       'cartodb-light': {
         name: 'CartoDB Light',
         url: 'https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors © CARTO'
+        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
+        bodyColor: '#f5f5f5',
+        mapDependentBorderColorSelected:  'rgba(0, 0, 0, 1)',
+        mapDependentBorderColor:  'rgba(70, 70, 70, 1)',
       },
       'cartodb-dark': {
         name: 'CartoDB Dark',
         url: 'https://cartodb-basemaps-a.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors © CARTO'
+        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
+        bodyColor: 'rgba(44, 44, 44, 1)',
+        mapDependentBorderColorSelected:  'rgba(255, 255, 255, 1)',
+        mapDependentBorderColor:  'rgba(167, 167, 167, 1)',
       }
     };
     
@@ -157,6 +188,9 @@ class AccidentVisualization {
       2: 'Serious',
       3: 'Fatal'
     };
+    
+    // UI state
+    this.controlPanelVisible = true;
     
     this.init();
   }
@@ -240,7 +274,7 @@ class AccidentVisualization {
       initialViewState: {
         longitude: 19.5, // Center of Poland
         latitude: 52.0,
-        zoom: 6,
+        zoom: 7,
         maxZoom: 18,
         pitch: 0,
         bearing: 0
@@ -276,12 +310,16 @@ class AccidentVisualization {
         return new BitmapLayer(props, {
           data: null,
           image: tileUrl,
-          bounds: [west, south, east, north]
+          bounds: [west, south, east, north],
+          // Add fade-in animation
+          opacity: tile.isLoaded ? 1 : 0,
+          transitions: {
+            opacity: {
+              duration: 300,
+              easing: t => t * t * (3.0 - 2.0 * t) // smoothstep easing
+            }
+          }
         });
-      },
-      
-      onTileLoad: (tile) => {
-        console.log('Tile loaded:', tile.index);
       },
       
       onTileError: (tile, error) => {
@@ -293,19 +331,50 @@ class AccidentVisualization {
   createLayers() {
     const layers = [this.createTileLayer()];
     
+    // Define map-dependent border colors based on current map style
+    const currentStyle = this.mapStyles[this.currentMapStyle];
+    const mapDependentBorderColorSelected = currentStyle.mapDependentBorderColorSelected;
+    const mapDependentBorderColor = currentStyle.mapDependentBorderColor;
+    
     if (this.currentData && this.currentData.features.length > 0) {
       const radius = parseInt(document.getElementById('radius-slider')?.value || '5');
       const opacity = parseFloat(document.getElementById('opacity-slider')?.value || '0.6');
       
+      // Filter features based on severity visibility
+      const visibleFeatures = this.currentData.features.filter(feature => {
+        const severity = this.getSeverityFromFeature(feature);
+        return this.severityVisibility[severity];
+      });
+      
+      const filteredData = {
+        type: 'FeatureCollection',
+        features: visibleFeatures
+      };
+      
       const accidentLayer = new GeoJsonLayer({
         id: 'accidents',
-        data: this.currentData,
+        data: filteredData,
         pointType: 'circle',
         getPointRadius: radius,
         getFillColor: d => d.properties.color || [255, 0, 0, 160],
-        getLineColor: [0, 0, 0, 100],
+        getLineColor: d => {
+          // Highlight selected feature with thick black border
+          const featureId = this.getFeatureId(d);
+          if (this.selectedFeatureId && featureId === this.selectedFeatureId) {
+            return mapDependentBorderColorSelected; // Selected border color
+          }
+          return mapDependentBorderColor; // Default border color
+        },
+        getLineWidth: d => {
+          // Thicker border for selected feature
+          const featureId = this.getFeatureId(d);
+          if (this.selectedFeatureId && featureId === this.selectedFeatureId) {
+            return 3; // Thick border for selected
+          }
+          return 1; // Default border width
+        },
         lineWidthMinPixels: 1,
-        lineWidthMaxPixels: 1,
+        lineWidthMaxPixels: 3,
         opacity: opacity,
         pickable: true,
         autoHighlight: true,
@@ -323,35 +392,50 @@ class AccidentVisualization {
     this.createYearButtons();
     this.createVoivodeshipButtons();
     
+    // Create severity control buttons
+    this.createSeverityControls();
+    
     // Populate map style dropdown
     this.updateMapStyleDropdown();
     
-    // Add event listeners
-    document.getElementById('language-select').addEventListener('change', (e) => {
-      this.currentLanguage = e.target.value;
-      this.updateLanguage();
-    });
+    // Add event listeners with null checks
+    const languageSelect = document.getElementById('language-select');
+    if (languageSelect) {
+      languageSelect.addEventListener('change', (e) => {
+        this.currentLanguage = e.target.value;
+        this.updateLanguage();
+      });
+    }
     
-    document.getElementById('map-style-select').addEventListener('change', (e) => {
-      this.currentMapStyle = e.target.value;
-      this.updateLayers();
-    });
+    const mapStyleSelect = document.getElementById('map-style-select');
+    if (mapStyleSelect) {
+      mapStyleSelect.addEventListener('change', (e) => {
+        this.currentMapStyle = e.target.value;
+        this.updateMapAttribution();
+        this.updateBodyColor();
+        this.updateLayers();
+      });
+    }
     
-    // Radius slider
+    // Radius slider - add both 'input' and 'change' events for real-time updates
     const radiusSlider = document.getElementById('radius-slider');
-    const radiusValue = document.getElementById('radius-value');
-    radiusSlider.addEventListener('input', (e) => {
-      radiusValue.textContent = e.target.value;
-      this.updateLayers();
-    });
+    if (radiusSlider) {
+      const updateRadius = (e) => {
+        this.updateLayers();
+      };
+      radiusSlider.addEventListener('input', updateRadius); // Real-time while dragging
+      radiusSlider.addEventListener('change', updateRadius); // When released
+    }
     
-    // Opacity slider
+    // Opacity slider - add both 'input' and 'change' events for real-time updates
     const opacitySlider = document.getElementById('opacity-slider');
-    const opacityValue = document.getElementById('opacity-value');
-    opacitySlider.addEventListener('input', (e) => {
-      opacityValue.textContent = e.target.value;
-      this.updateLayers();
-    });
+    if (opacitySlider) {
+      const updateOpacity = (e) => {
+        this.updateLayers();
+      };
+      opacitySlider.addEventListener('input', updateOpacity); // Real-time while dragging
+      opacitySlider.addEventListener('change', updateOpacity); // When released
+    }
     
     // Initialize language
     this.updateLanguage();
@@ -359,6 +443,11 @@ class AccidentVisualization {
   
   createYearButtons() {
     const container = document.getElementById('year-buttons');
+    if (!container) {
+      console.warn('Year buttons container not found');
+      return;
+    }
+    
     container.innerHTML = '';
     
     this.years.forEach(year => {
@@ -372,6 +461,11 @@ class AccidentVisualization {
   
   createVoivodeshipButtons() {
     const container = document.getElementById('voivodeship-buttons');
+    if (!container) {
+      console.warn('Voivodeship buttons container not found');
+      return;
+    }
+    
     container.innerHTML = '';
     
     this.voivodeships.forEach(voivodeship => {
@@ -382,6 +476,72 @@ class AccidentVisualization {
       button.onclick = () => this.toggleVoivodeship(voivodeship);
       container.appendChild(button);
     });
+  }
+  
+  createSeverityControls() {
+    const container = document.getElementById('severity-controls');
+    if (!container) {
+      console.warn('Severity controls container not found');
+      return;
+    }
+    
+    container.innerHTML = '';
+    
+    const severityOrder = ['Fatal', 'Serious', 'Slight', 'DamageOnly'];
+    const severityColors = {
+      'Fatal': 'rgb(139, 0, 0)',
+      'Serious': 'rgb(255, 136, 0)',
+      'Slight': 'rgb(255, 204, 0)',
+      'DamageOnly': 'rgb(128, 128, 128)'
+    };
+    
+    severityOrder.forEach(severity => {
+      const controlDiv = document.createElement('div');
+      controlDiv.className = 'severity-control';
+      controlDiv.style.cssText = 'display: flex; align-items: center; margin: 5px 0; padding: 5px; border-radius: 4px; background: rgba(255,255,255,0.1);';
+      
+      const colorIndicator = document.createElement('div');
+      colorIndicator.style.cssText = `
+        width: 16px;
+        height: 16px;
+        background-color: ${severityColors[severity]};
+        margin-right: 8px;
+        border-radius: 50%;
+        border: 2px solid white;
+      `;
+      
+      const label = document.createElement('span');
+      label.style.cssText = 'flex: 1; margin-right: 8px; font-size: 12px;';
+      label.textContent = this.getSeverityDisplayName(severity);
+      label.id = `severity-label-${severity}`;
+      
+      const countSpan = document.createElement('span');
+      countSpan.style.cssText = 'margin-right: 8px; font-size: 11px; color: #ccc; min-width: 40px; text-align: right;';
+      countSpan.textContent = '0';
+      countSpan.id = `severity-count-${severity}`;
+      
+      const button = document.createElement('button');
+      button.className = 'severity-toggle-button';
+      button.style.cssText = `
+        padding: 2px 8px;
+        font-size: 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        min-width: 50px;
+      `;
+      
+      button.onclick = () => this.toggleSeverityVisibility(severity);
+      button.id = `severity-button-${severity}`;
+      
+      controlDiv.appendChild(colorIndicator);
+      controlDiv.appendChild(label);
+      controlDiv.appendChild(countSpan);
+      controlDiv.appendChild(button);
+      container.appendChild(controlDiv);
+    });
+    
+    this.updateSeverityButtonStates();
   }
   
   toggleYear(year) {
@@ -402,6 +562,12 @@ class AccidentVisualization {
     }
     this.updateButtonStates();
     this.loadData();
+  }
+  
+  toggleSeverityVisibility(severity) {
+    this.severityVisibility[severity] = !this.severityVisibility[severity];
+    this.updateSeverityButtonStates();
+    this.updateLayers();
   }
   
   clearYearSelection() {
@@ -430,6 +596,22 @@ class AccidentVisualization {
     this.loadData();
   }
   
+  showAllSeverities() {
+    Object.keys(this.severityVisibility).forEach(severity => {
+      this.severityVisibility[severity] = true;
+    });
+    this.updateSeverityButtonStates();
+    this.updateLayers();
+  }
+  
+  hideAllSeverities() {
+    Object.keys(this.severityVisibility).forEach(severity => {
+      this.severityVisibility[severity] = false;
+    });
+    this.updateSeverityButtonStates();
+    this.updateLayers();
+  }
+  
   updateButtonStates() {
     // Update year buttons
     const yearButtons = document.querySelectorAll('#year-buttons .selection-button');
@@ -454,9 +636,55 @@ class AccidentVisualization {
     });
   }
   
+  updateSeverityButtonStates() {
+    const t = this.translations[this.currentLanguage];
+    
+    // Calculate current severity counts
+    const severityCounts = { DamageOnly: 0, Slight: 0, Serious: 0, Fatal: 0 };
+    if (this.currentData && this.currentData.features) {
+      this.currentData.features.forEach(feature => {
+        const severity = this.getSeverityFromFeature(feature);
+        if (severityCounts.hasOwnProperty(severity)) {
+          severityCounts[severity]++;
+        }
+      });
+    }
+    
+    Object.keys(this.severityVisibility).forEach(severity => {
+      const button = document.getElementById(`severity-button-${severity}`);
+      const label = document.getElementById(`severity-label-${severity}`);
+      const countSpan = document.getElementById(`severity-count-${severity}`);
+      
+      if (button && label) {
+        const isVisible = this.severityVisibility[severity];
+        
+        button.textContent = isVisible ? t.hideCategory : t.showCategory;
+        button.style.backgroundColor = isVisible ? '#ff4444' : '#4CAF50';
+        button.style.color = 'white';
+        
+        // Update label text with current language
+        label.textContent = this.getSeverityDisplayName(severity);
+        
+        // Update count
+        if (countSpan) {
+          const count = severityCounts[severity] || 0;
+          countSpan.textContent = `${count.toLocaleString()}`;
+          countSpan.style.color = '#000000ff';
+        }
+        
+        // Update visual state
+        const controlDiv = button.parentElement;
+        controlDiv.style.opacity = isVisible ? '1' : '0.5';
+      }
+    });
+  }
+  
   updateMapStyleDropdown() {
     const mapStyleSelect = document.getElementById('map-style-select');
-    if (!mapStyleSelect) return;
+    if (!mapStyleSelect) {
+      console.warn('Map style select not found');
+      return;
+    }
     
     mapStyleSelect.innerHTML = '';
     
@@ -468,11 +696,52 @@ class AccidentVisualization {
     });
     
     mapStyleSelect.value = this.currentMapStyle;
+    this.updateMapAttribution();
+    this.updateBodyColor();
+  }
+  
+  updateMapAttribution() {
+    const attributionElement = document.getElementById('map-attribution');
+    const currentStyle = this.mapStyles[this.currentMapStyle];
+    
+    if (attributionElement && currentStyle) {
+      attributionElement.innerHTML = currentStyle.attribution;
+    }
+  }
+
+  updateBodyColor() {
+    const currentStyle = this.mapStyles[this.currentMapStyle];
+    if (currentStyle && currentStyle.bodyColor) {
+      document.body.style.backgroundColor = currentStyle.bodyColor;
+    }
+  }
+  
+  toggleControlPanel() {
+    this.controlPanelVisible = !this.controlPanelVisible;
+    const panel = document.getElementById('control-panel');
+    const toggleButton = document.getElementById('toggle-button');
+    
+    if (!panel || !toggleButton) {
+      console.warn('Control panel or toggle button not found');
+      return;
+    }
+    
+    if (this.controlPanelVisible) {
+      panel.classList.remove('hidden');
+      toggleButton.classList.remove('panel-hidden');
+      toggleButton.innerHTML = '☰';
+    } else {
+      panel.classList.add('hidden');
+      toggleButton.classList.add('panel-hidden');
+      toggleButton.innerHTML = '→';
+    }
   }
   
   async loadData() {
     const loading = document.getElementById('loading');
-    loading.style.display = 'block';
+    if (loading) {
+      loading.style.display = 'block';
+    }
     
     try {
       const selectedYears = Array.from(this.selectedYears);
@@ -484,7 +753,9 @@ class AccidentVisualization {
         this.currentData = { type: 'FeatureCollection', features: [] };
         this.updateLayers();
         this.updateStats(0, {});
-        loading.innerHTML = 'Loading data...';
+        if (loading) {
+          loading.innerHTML = 'Loading data...';
+        }
         return;
       }
       
@@ -523,7 +794,9 @@ class AccidentVisualization {
         const fileInfo = filesToLoad[i];
         
         // Update loading progress
-        loading.innerHTML = `Loading file ${i + 1}/${filesToLoad.length}...<br>${fileInfo.filename}`;
+        if (loading) {
+          loading.innerHTML = `Loading file ${i + 1}/${filesToLoad.length}...<br>${fileInfo.filename}`;
+        }
         
         try {
           // Check cache first
@@ -592,61 +865,93 @@ class AccidentVisualization {
       console.error('Failed to load data:', error);
       this.updateStats(0, {});
     } finally {
-      loading.style.display = 'none';
-      loading.innerHTML = 'Loading data...';
+      if (loading) {
+        loading.style.display = 'none';
+        loading.innerHTML = 'Loading data...';
+      }
     }
   }
   
   updateLayers() {
     this.deckgl.setProps({ layers: this.createLayers() });
+    // Update severity counts when layers change
+    this.updateSeverityButtonStates();
   }
   
   updateLanguage() {
     const t = this.translations[this.currentLanguage];
     
-    // Update main UI elements
-    document.getElementById('title').textContent = t.title;
-    document.getElementById('language-label').textContent = t.languageLabel;
-    document.getElementById('map-style-label').textContent = t.mapStyleLabel;
-    document.getElementById('years-label').innerHTML = `
-      ${t.yearsLabel}
-      <button class="show-button" onclick="app.showAllYears()" id="show-all-years">${t.showAll}</button>
-      <button class="clear-button" onclick="app.clearYearSelection()" id="clear-all-years">${t.clearAll}</button>
-    `;
-    document.getElementById('voivodeships-label').innerHTML = `
-      ${t.voivodeshipsLabel}
-      <button class="show-button" onclick="app.showAllVoivodeships()" id="show-all-voivodeships">${t.showAll}</button>
-      <button class="clear-button" onclick="app.clearVoivodeshipSelection()" id="clear-all-voivodeships">${t.clearAll}</button>
-    `;
+    // Update main UI elements with null checks
+    const title = document.getElementById('title');
+    if (title) title.textContent = t.title;
     
-    // Update slider labels
-    document.getElementById('radius-label').innerHTML = `${t.pointSize} <span id="radius-value">${document.getElementById('radius-slider').value}</span>`;
-    document.getElementById('opacity-label').innerHTML = `${t.opacity} <span id="opacity-value">${document.getElementById('opacity-slider').value}</span>`;
+    const languageLabel = document.getElementById('language-label');
+    if (languageLabel) languageLabel.textContent = t.languageLabel;
     
-    // Update legend
-    document.getElementById('severity-legend').textContent = t.severity;
-    document.getElementById('minor-legend').textContent = t.damageOnly;
-    document.getElementById('injury-legend').textContent = t.slight;
-    document.getElementById('fatal-legend').textContent = t.serious;
+    const mapStyleLabel = document.getElementById('map-style-label');
+    if (mapStyleLabel) mapStyleLabel.textContent = t.mapStyleLabel;
     
-    // Add fourth legend item for fatal if it doesn't exist
-    const legend = document.querySelector('.legend');
-    let fatalLegendItem = document.getElementById('fatal-legend-item');
-    if (!fatalLegendItem) {
-      fatalLegendItem = document.createElement('div');
-      fatalLegendItem.className = 'legend-item';
-      fatalLegendItem.id = 'fatal-legend-item';
-      fatalLegendItem.innerHTML = `
-        <div class="legend-color" style="background-color: rgb(139, 0, 0);"></div>
-        <span id="fatal-legend-text">${t.fatal}</span>
+    const yearsLabel = document.getElementById('years-label');
+    if (yearsLabel) {
+      yearsLabel.innerHTML = `
+        ${t.yearsLabel}
+        <button class="show-button" onclick="app.showAllYears()" id="show-all-years">${t.showAll}</button>
+        <button class="clear-button" onclick="app.clearYearSelection()" id="clear-all-years">${t.clearAll}</button>
       `;
-      legend.appendChild(fatalLegendItem);
-    } else {
-      document.getElementById('fatal-legend-text').textContent = t.fatal;
     }
     
+    const voivodeshipsLabel = document.getElementById('voivodeships-label');
+    if (voivodeshipsLabel) {
+      voivodeshipsLabel.innerHTML = `
+        ${t.voivodeshipsLabel}
+        <button class="show-button" onclick="app.showAllVoivodeships()" id="show-all-voivodeships">${t.showAll}</button>
+        <button class="clear-button" onclick="app.clearVoivodeshipSelection()" id="clear-all-voivodeships">${t.clearAll}</button>
+      `;
+    }
+    
+    // Update severity controls label
+    const severityControlsLabel = document.getElementById('severity-controls-label');
+    if (severityControlsLabel) {
+      severityControlsLabel.innerHTML = `
+        ${t.severityControls}
+        <button class="show-button" onclick="app.showAllSeverities()" style="margin-left: 10px; font-size: 10px; padding: 2px 6px;">${t.showAll}</button>
+        <button class="clear-button" onclick="app.hideAllSeverities()" style="font-size: 10px; padding: 2px 6px;">${t.clearAll}</button>
+      `;
+    }
+    
+    // Update slider labels
+    const radiusLabel = document.getElementById('radius-label');
+    if (radiusLabel) radiusLabel.textContent = t.pointSize + ':';
+    
+    const opacityLabel = document.getElementById('opacity-label');
+    if (opacityLabel) opacityLabel.textContent = t.opacity + ':';
+    
+    // Update legend items with consistent naming
+    const severityLegend = document.getElementById('severity-legend');
+    if (severityLegend) severityLegend.textContent = t.severity;
+    
+    const damageOnlyLegend = document.getElementById('damage-only-legend');
+    if (damageOnlyLegend) damageOnlyLegend.textContent = t.damageOnly;
+    
+    const slightLegend = document.getElementById('slight-legend');
+    if (slightLegend) slightLegend.textContent = t.slight;
+    
+    const seriousLegend = document.getElementById('serious-legend');
+    if (seriousLegend) seriousLegend.textContent = t.serious;
+    
+    const fatalLegend = document.getElementById('fatal-legend');
+    if (fatalLegend) fatalLegend.textContent = t.fatal;
+    
     // Update loading text
-    document.getElementById('loading-text').textContent = t.loadingData;
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+      if (loadingElement.innerHTML === 'Loading data...' || loadingElement.innerHTML.includes('Loading')) {
+        loadingElement.innerHTML = t.loadingData;
+      }
+    }
+    
+    // Update severity control buttons
+    this.updateSeverityButtonStates();
     
     // Refresh stats with current language
     this.updateStatsDisplay();
@@ -669,15 +974,34 @@ class AccidentVisualization {
       this.updateStats(totalAccidents, severityCounts);
     } else {
       const stats = document.getElementById('stats');
-      const t = this.translations[this.currentLanguage];
-      stats.textContent = t.noDataLoaded;
+      if (stats) {
+        const t = this.translations[this.currentLanguage];
+        stats.textContent = t.noDataLoaded;
+      }
     }
   }
 
   updateStats(totalAccidents, severityCounts) {
     const stats = document.getElementById('stats');
-    const total = Object.values(severityCounts).reduce((a, b) => a + b, 0);
+    if (!stats) {
+      console.warn('Stats element not found');
+      return;
+    }
+    
     const t = this.translations[this.currentLanguage];
+    
+    // Calculate visible accidents based on severity visibility
+    let visibleAccidents = 0;
+    const visibleSeverityCounts = {};
+    
+    Object.keys(severityCounts).forEach(severity => {
+      if (this.severityVisibility[severity]) {
+        visibleAccidents += severityCounts[severity];
+        visibleSeverityCounts[severity] = severityCounts[severity];
+      } else {
+        visibleSeverityCounts[severity] = 0;
+      }
+    });
     
     const selectedYears = Array.from(this.selectedYears).sort();
     const selectedVoivodeships = Array.from(this.selectedVoivodeships);
@@ -687,11 +1011,7 @@ class AccidentVisualization {
       ${t.years} ${selectedYears.length > 0 ? selectedYears.join(', ') : t.unknown}<br>
       ${t.voivodeships} ${selectedVoivodeships.length}<br><br>
       <strong>${t.totalAccidents}</strong> ${totalAccidents.toLocaleString()}<br>
-      <strong>${t.displayed}</strong> ${total.toLocaleString()}<br>
-      ${t.fatal}: ${(severityCounts.Fatal || 0).toLocaleString()}<br>
-      ${t.serious}: ${(severityCounts.Serious || 0).toLocaleString()}<br>
-      ${t.slight}: ${(severityCounts.Slight || 0).toLocaleString()}<br>
-      ${t.damageOnly}: ${(severityCounts.DamageOnly || 0).toLocaleString()}
+      <strong>${t.displayed}</strong> ${visibleAccidents.toLocaleString()}<br>
     `;
   }
   
@@ -725,7 +1045,9 @@ class AccidentVisualization {
   onClick(info) {
     if (info.object) {
       this.selectedFeature = info.object;
+      this.selectedFeatureId = this.getFeatureId(info.object);
       this.showPersistentTooltip(info);
+      this.updateLayers(); // Refresh layers to show selection highlight
     } else {
       this.hidePersistentTooltip();
     }
@@ -774,7 +1096,7 @@ class AccidentVisualization {
     }
     
     // Get casualty counts - check multiple possible property names
-    const fatal = props[3] || props.fatalities || props.ZM || 0;
+    const fatal = props[3] || props.fatal || props.ZM || 0;
     const serious = props[2] || props.serious || props.ZC || 0;
     const slight = props[1] || props.slight || props.RL || 0;
     const other = props[0] || props.other || props.RC || 0;
@@ -835,9 +1157,19 @@ class AccidentVisualization {
       this.persistentTooltip.remove();
       this.persistentTooltip = null;
       this.selectedFeature = null;
+      this.selectedFeatureId = null;
+      this.updateLayers(); // Refresh layers to remove selection highlight
     }
   }
-  
+
+  // Helper method to get a unique ID for a feature
+  getFeatureId(feature) {
+    const props = feature.properties;
+    // Try multiple possible ID fields
+    return props.ID || props.id || props.accident_id || 
+           `${props.year || 'unknown'}_${props.WOJ || 'unknown'}_${feature.geometry.coordinates.join('_')}`;
+  }
+
   getSeverityFromFeature(feature) {
     const props = feature.properties;
     
@@ -848,21 +1180,23 @@ class AccidentVisualization {
     }
     
     // 2. Numeric severity code
-    if (props.severity_code !== undefined) {
-      return this.severityMapping[props.severity_code] || 'DamageOnly';
+    if (props.sev !== undefined) {
+      return this.severityMapping[props.sev] || 'DamageOnly';
     }
     
-    // 3. Based on casualty counts - determine highest severity
-    const fatal = props[3] || props.fatalities || props.ZM || 0;
+    // 3. Based on casualtys counts - determine highest severity
+    const fatal = props[3] || props.fatal || props.ZM || 0;
     const serious = props[2] || props.serious || props.ZC || 0;
     const slight = props[1] || props.slight || props.RL || 0;
     
-    if (fatal > 0) return 'Fatal';
-    if (serious > 0) return 'Serious';
-    if (slight > 0) return 'Slight';
-    
+    var sev = 'DamageOnly'
+
+    if (slight > 0) sev = 'Slight';
+    if (serious > 0) sev = 'Serious';
+    if (fatal > 0) sev = 'Fatal';
+
     // 4. Default to damage only
-    return 'DamageOnly';
+    return sev;
   }
   
   getSeverityDisplayName(severity) {
