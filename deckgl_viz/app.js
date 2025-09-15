@@ -771,7 +771,7 @@ class AccidentVisualization {
         // Generate expected filenames
         for (const voivodeship of selectedVoivodeships) {
           for (const year of selectedYears) {
-            const filename = `accidents_${year}_${voivodeship}.geojson`;
+            const filename = `accidents_WOJ._${year}_${voivodeship}.geojson`;
             filesToLoad.push({
               filename: filename,
               year: year,
