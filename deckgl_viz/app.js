@@ -148,7 +148,7 @@ class AccidentVisualization {
       'openstreetmap': {
         name: 'OpenStreetMap',
         url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors',
+        attribution: 'Dane: <a href="https://sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors',
         bodyColor: '#f0f0f0',
         mapDependentBorderColorSelected:  'rgba(0, 0, 0, 1)',
         mapDependentBorderColor:  'rgba(70, 70, 70, 1)',
@@ -156,7 +156,7 @@ class AccidentVisualization {
       'satellite': {
         name: 'Satellite',
         url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>Esri, Maxar, GeoEye, Earthstar Geographics',
+        attribution: 'Dane: <a href="https://sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>Esri, Maxar, GeoEye, Earthstar Geographics',
         bodyColor: '#1a1a1a',
         mapDependentBorderColorSelected:  'rgba(255, 255, 255, 1)',
         mapDependentBorderColor:  'rgba(167, 167, 167, 1)',
@@ -164,7 +164,7 @@ class AccidentVisualization {
       'cartodb-light': {
         name: 'CartoDB Light',
         url: 'https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
+        attribution: 'Dane: <a href="https://sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
         bodyColor: '#f5f5f5',
         mapDependentBorderColorSelected:  'rgba(0, 0, 0, 1)',
         mapDependentBorderColor:  'rgba(70, 70, 70, 1)',
@@ -172,7 +172,7 @@ class AccidentVisualization {
       'cartodb-dark': {
         name: 'CartoDB Dark',
         url: 'https://cartodb-basemaps-a.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png',
-        attribution: 'Dane: <a href="sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
+        attribution: 'Dane: <a href="https://sewik.pl">System Ewidencji Wypadków i Kolizji</a> <br>© OpenStreetMap contributors © CARTO',
         bodyColor: 'rgba(44, 44, 44, 1)',
         mapDependentBorderColorSelected:  'rgba(255, 255, 255, 1)',
         mapDependentBorderColor:  'rgba(167, 167, 167, 1)',
