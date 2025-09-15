@@ -125,22 +125,22 @@ class AccidentVisualization {
     // Pre-defined years and voivodeships
     this.years = [2018, 2019, 2020, 2021, 2022, 2023, 2024];
     this.voivodeships = [
-      'DOLNOŚLĄSKIE',
-      'KUJAWSKO-POMORSKIE',
-      'LUBELSKIE',
-      'LUBUSKIE',
-      'ŁÓDZKIE',
-      'MAŁOPOLSKIE',
-      'MAZOWIECKIE',
-      'OPOLSKIE',
-      'PODKARPACKIE',
-      'PODLASKIE',
-      'POMORSKIE',
-      'ŚLĄSKIE',
-      'ŚWIĘTOKRZYSKIE',
-      'WARMIŃSKO-MAZURSKIE',
-      'WIELKOPOLSKIE',
-      'ZACHODNIOPOMORSKIE'
+      'WOJ. DOLNOŚLĄSKIE',
+      'WOJ. KUJAWSKO-POMORSKIE',
+      'WOJ. LUBELSKIE',
+      'WOJ. LUBUSKIE',
+      'WOJ. ŁÓDZKIE',
+      'WOJ. MAŁOPOLSKIE',
+      'WOJ. MAZOWIECKIE',
+      'WOJ. OPOLSKIE',
+      'WOJ. PODKARPACKIE',
+      'WOJ. PODLASKIE',
+      'WOJ. POMORSKIE',
+      'WOJ. ŚLĄSKIE',
+      'WOJ. ŚWIĘTOKRZYSKIE',
+      'WOJ. WARMIŃSKO-MAZURSKIE',
+      'WOJ. WIELKOPOLSKIE',
+      'WOJ. ZACHODNIOPOMORSKIE'
     ];
     
     // Available map styles
@@ -192,6 +192,11 @@ class AccidentVisualization {
     // UI state
     this.controlPanelVisible = true;
     
+    // URL state management
+    this.isInitializing = true; // Prevent URL updates during initialization
+    this.updateUrlTimeout = null; // Debounce URL updates
+    this.currentViewState = null; // Store current view state
+    
     this.init();
   }
   
@@ -203,14 +208,25 @@ class AccidentVisualization {
       // Setup controls with pre-defined data
       this.setupControls();
       
-      // Set default selections (last year and first voivodeship)
-      this.setDefaultSelections();
+      // Read URL parameters first, then set defaults if nothing specified
+      this.readUrlParameters();
+      
+      // If no URL parameters, set default selections
+      if (this.selectedYears.size === 0 && this.selectedVoivodeships.size === 0) {
+        this.setDefaultSelections();
+      }
       
       // Try to load metadata and file index (optional)
       await this.loadMetadata();
       
       // Load initial data
       await this.loadData();
+      
+      // Enable URL updates after initialization with a small delay
+      setTimeout(() => {
+        this.isInitializing = false;
+        console.log('Initialization complete - URL updates now enabled');
+      }, 1000); // 1 second delay to ensure everything is fully loaded
       
     } catch (error) {
       console.error('Failed to initialize:', error);
@@ -269,21 +285,59 @@ class AccidentVisualization {
   }
   
   initDeckGL() {
+    // Read initial view state from URL or use defaults
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialViewState = {
+      longitude: parseFloat(urlParams.get('lon')) || 19.5,
+      latitude: parseFloat(urlParams.get('lat')) || 52.0,
+      zoom: parseFloat(urlParams.get('zoom')) || 7,
+      maxZoom: 18,
+      minZoom: 1,
+      pitch: 0,
+      bearing: 0
+    };
+
+    console.log('Initial view state:', initialViewState);
+
     this.deckgl = new DeckGL({
       container: 'map',
-      initialViewState: {
-        longitude: 19.5, // Center of Poland
-        latitude: 52.0,
-        zoom: 7,
-        maxZoom: 18,
-        pitch: 0,
-        bearing: 0
-      },
-      controller: true,
+      initialViewState: initialViewState,
+      controller: true, // Simplified controller configuration
       getTooltip: this.getTooltip.bind(this),
       onClick: this.onClick.bind(this),
+      onViewStateChange: this.handleViewStateChange.bind(this),
       layers: this.createLayers()
     });
+  }
+
+  handleViewStateChange({ viewState }) {
+    console.log('View state changing:', viewState);
+    console.log('Current lat:', viewState.latitude, 'lon:', viewState.longitude, 'zoom:', viewState.zoom);
+    
+    // Store the current view state
+    this.currentViewState = {
+      latitude: viewState.latitude,
+      longitude: viewState.longitude,
+      zoom: viewState.zoom,
+      bearing: viewState.bearing,
+      pitch: viewState.pitch
+    };
+    
+    console.log('Stored view state:', this.currentViewState);
+    
+    // Hide persistent tooltip when map view changes
+    this.hidePersistentTooltip();
+    
+    // Update URL with new view state (debounced)
+    if (!this.isInitializing) {
+      console.log('Calling updateUrlParameters from handleViewStateChange');
+      this.updateUrlParameters();
+    } else {
+      console.log('Skipping URL update - still initializing');
+    }
+    
+    // Return the viewState to allow deck.gl to update
+    return viewState;
   }
   
   createTileLayer() {
@@ -404,6 +458,7 @@ class AccidentVisualization {
       languageSelect.addEventListener('change', (e) => {
         this.currentLanguage = e.target.value;
         this.updateLanguage();
+        this.updateUrlParameters();
       });
     }
     
@@ -413,6 +468,7 @@ class AccidentVisualization {
         this.currentMapStyle = e.target.value;
         this.updateMapAttribution();
         this.updateBodyColor();
+        this.updateUrlParameters();
         this.updateLayers();
       });
     }
@@ -421,20 +477,22 @@ class AccidentVisualization {
     const radiusSlider = document.getElementById('radius-slider');
     if (radiusSlider) {
       const updateRadius = (e) => {
+        this.updateUrlParameters();
         this.updateLayers();
       };
-      radiusSlider.addEventListener('input', updateRadius); // Real-time while dragging
-      radiusSlider.addEventListener('change', updateRadius); // When released
+      radiusSlider.addEventListener('input', updateRadius);
+      radiusSlider.addEventListener('change', updateRadius);
     }
     
     // Opacity slider - add both 'input' and 'change' events for real-time updates
     const opacitySlider = document.getElementById('opacity-slider');
     if (opacitySlider) {
       const updateOpacity = (e) => {
+        this.updateUrlParameters();
         this.updateLayers();
       };
-      opacitySlider.addEventListener('input', updateOpacity); // Real-time while dragging
-      opacitySlider.addEventListener('change', updateOpacity); // When released
+      opacitySlider.addEventListener('input', updateOpacity);
+      opacitySlider.addEventListener('change', updateOpacity);
     }
     
     // Initialize language
@@ -551,6 +609,7 @@ class AccidentVisualization {
       this.selectedYears.add(year);
     }
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
@@ -561,24 +620,28 @@ class AccidentVisualization {
       this.selectedVoivodeships.add(voivodeship);
     }
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
   toggleSeverityVisibility(severity) {
     this.severityVisibility[severity] = !this.severityVisibility[severity];
     this.updateSeverityButtonStates();
+    this.updateUrlParameters();
     this.updateLayers();
   }
   
   clearYearSelection() {
     this.selectedYears.clear();
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
   clearVoivodeshipSelection() {
     this.selectedVoivodeships.clear();
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
@@ -586,6 +649,7 @@ class AccidentVisualization {
     this.selectedYears.clear();
     this.years.forEach(year => this.selectedYears.add(year));
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
@@ -593,6 +657,7 @@ class AccidentVisualization {
     this.selectedVoivodeships.clear();
     this.voivodeships.forEach(voivodeship => this.selectedVoivodeships.add(voivodeship));
     this.updateButtonStates();
+    this.updateUrlParameters();
     this.loadData();
   }
   
@@ -601,6 +666,7 @@ class AccidentVisualization {
       this.severityVisibility[severity] = true;
     });
     this.updateSeverityButtonStates();
+    this.updateUrlParameters();
     this.updateLayers();
   }
   
@@ -609,6 +675,7 @@ class AccidentVisualization {
       this.severityVisibility[severity] = false;
     });
     this.updateSeverityButtonStates();
+    this.updateUrlParameters();
     this.updateLayers();
   }
   
@@ -735,6 +802,9 @@ class AccidentVisualization {
       toggleButton.classList.add('panel-hidden');
       toggleButton.innerHTML = '→';
     }
+    
+    // Update URL to reflect panel state
+    this.updateUrlParameters();
   }
   
   async loadData() {
@@ -881,6 +951,9 @@ class AccidentVisualization {
   updateLanguage() {
     const t = this.translations[this.currentLanguage];
     
+    // Update document title
+    document.title = t.title;
+    
     // Update main UI elements with null checks
     const title = document.getElementById('title');
     if (title) title.textContent = t.title;
@@ -904,7 +977,7 @@ class AccidentVisualization {
     if (voivodeshipsLabel) {
       voivodeshipsLabel.innerHTML = `
         ${t.voivodeshipsLabel}
-        <button class="show-button" onclick="app.showAllVoivodeships()" id="show-all-voivodeships">${t.showAll}</button>
+        <!-- <button class="show-button" onclick="app.showAllVoivodeships()" id="show-all-voivodeships">${t.showAll}</button> -->
         <button class="clear-button" onclick="app.clearVoivodeshipSelection()" id="clear-all-voivodeships">${t.clearAll}</button>
       `;
     }
@@ -1052,11 +1125,6 @@ class AccidentVisualization {
       this.hidePersistentTooltip();
     }
   }
-  onViewStateChange(viewState) {
-    // Hide persistent tooltip when map view changes (zoom, pan, etc.)
-    this.hidePersistentTooltip();
-    return viewState;
-  }  
   showPersistentTooltip(info) {
     this.hidePersistentTooltip(); // Remove any existing tooltip
     
@@ -1208,6 +1276,184 @@ class AccidentVisualization {
       'DamageOnly': t.damageOnly
     };
     return severityMap[severity] || severity;
+  }
+  
+  readUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Read selected years
+    const yearsParam = urlParams.get('years');
+    if (yearsParam) {
+      this.selectedYears.clear();
+      yearsParam.split(',').forEach(year => {
+        const yearNum = parseInt(year.trim());
+        if (!isNaN(yearNum)) {
+          this.selectedYears.add(yearNum);
+        }
+      });
+    }
+    
+    // Read selected voivodeships
+    const voivodeshipsParam = urlParams.get('voivodeships');
+    if (voivodeshipsParam) {
+      this.selectedVoivodeships.clear();
+      voivodeshipsParam.split(',').forEach(voivodeship => {
+        const voivodeshipName = voivodeship.trim();
+        if (voivodeshipName) {
+          this.selectedVoivodeships.add(voivodeshipName);
+        }
+      });
+    }
+    
+    // Read severity visibility
+    const severityParam = urlParams.get('severity');
+    if (severityParam) {
+      const severityArray = severityParam.split(',');
+      Object.keys(this.severityVisibility).forEach(severity => {
+        this.severityVisibility[severity] = severityArray.includes(severity);
+      });
+    }
+    
+    // Read map style
+    const mapStyleParam = urlParams.get('mapStyle');
+    if (mapStyleParam && this.mapStyles[mapStyleParam]) {
+      this.currentMapStyle = mapStyleParam;
+    }
+    
+    // Read language
+    const languageParam = urlParams.get('lang');
+    if (languageParam && this.translations[languageParam]) {
+      this.currentLanguage = languageParam;
+      const languageSelect = document.getElementById('language-select');
+      if (languageSelect) {
+        languageSelect.value = languageParam;
+      }
+    }
+    
+    // Read point size
+    const radiusParam = urlParams.get('radius');
+    if (radiusParam) {
+      const radiusSlider = document.getElementById('radius-slider');
+      if (radiusSlider) {
+        radiusSlider.value = radiusParam;
+      }
+    }
+    
+    // Read opacity
+    const opacityParam = urlParams.get('opacity');
+    if (opacityParam) {
+      const opacitySlider = document.getElementById('opacity-slider');
+      if (opacitySlider) {
+        opacitySlider.value = opacityParam;
+      }
+    }
+    
+    // Read control panel visibility
+    const panelParam = urlParams.get('panel');
+    if (panelParam === 'hidden') {
+      this.controlPanelVisible = false;
+      setTimeout(() => this.toggleControlPanel(), 100); // Delay to ensure DOM is ready
+    }
+    
+    this.updateButtonStates();
+  }
+  
+  updateUrlParameters() {
+    console.log('updateUrlParameters called, isInitializing:', this.isInitializing);
+    
+    // Don't update URL during initialization
+    if (this.isInitializing) {
+      console.log('Skipping URL update - still initializing');
+      return;
+    }
+    
+    // Debounce URL updates to avoid too frequent updates
+    if (this.updateUrlTimeout) {
+      clearTimeout(this.updateUrlTimeout);
+    }
+    
+    this.updateUrlTimeout = setTimeout(() => {
+      console.log('Executing URL update...');
+      try {
+        const urlParams = new URLSearchParams();
+        
+        // Get current view state - use stored view state first
+        let viewState = this.currentViewState;
+        console.log('Using stored view state:', viewState);
+        
+        if (!viewState && this.deckgl) {
+          console.log('No stored view state, trying to get from deckgl...');
+          // Try multiple access methods as fallback
+          viewState = this.deckgl.viewState || 
+                     this.deckgl.deck?.viewState || 
+                     this.deckgl.viewManager?.viewState ||
+                     this.deckgl.viewports?.[0];
+          console.log('Retrieved view state from deckgl:', viewState);
+        }
+        
+        if (viewState && viewState.latitude !== undefined && viewState.longitude !== undefined) {
+          console.log('Adding view state to URL - lat:', viewState.latitude, 'lon:', viewState.longitude, 'zoom:', viewState.zoom);
+          urlParams.set('lat', viewState.latitude.toFixed(6));
+          urlParams.set('lon', viewState.longitude.toFixed(6));
+          urlParams.set('zoom', viewState.zoom.toFixed(2));
+        } else {
+          console.warn('Could not access view state for URL update:', viewState);
+        }
+        
+        // Add selected years
+        if (this.selectedYears.size > 0) {
+          urlParams.set('years', Array.from(this.selectedYears).sort().join(','));
+        }
+        
+        // Add selected voivodeships
+        if (this.selectedVoivodeships.size > 0) {
+          urlParams.set('voivodeships', Array.from(this.selectedVoivodeships).sort().join(','));
+        }
+        
+        // Add severity visibility (only include visible ones to keep URL shorter)
+        const visibleSeverities = Object.keys(this.severityVisibility)
+          .filter(severity => this.severityVisibility[severity]);
+        if (visibleSeverities.length > 0 && visibleSeverities.length < 4) {
+          urlParams.set('severity', visibleSeverities.join(','));
+        }
+        
+        // Add map style (only if different from default)
+        if (this.currentMapStyle !== 'cartodb-light') {
+          urlParams.set('mapStyle', this.currentMapStyle);
+        }
+        
+        // Add language (only if different from default)
+        if (this.currentLanguage !== 'pl') {
+          urlParams.set('lang', this.currentLanguage);
+        }
+        
+        // Add point size (only if different from default)
+        const radiusSlider = document.getElementById('radius-slider');
+        if (radiusSlider && radiusSlider.value !== '5') {
+          urlParams.set('radius', radiusSlider.value);
+        }
+        
+        // Add opacity (only if different from default)
+        const opacitySlider = document.getElementById('opacity-slider');
+        if (opacitySlider && opacitySlider.value !== '0.6') {
+          urlParams.set('opacity', opacitySlider.value);
+        }
+        
+        // Add control panel visibility (only if hidden)
+        if (!this.controlPanelVisible) {
+          urlParams.set('panel', 'hidden');
+        }
+        
+        // Update URL without page reload
+        const newUrl = window.location.pathname + '?' + urlParams.toString();
+        window.history.replaceState({}, '', newUrl);
+        
+        console.log('Successfully updated URL:', newUrl);
+        
+      } catch (error) {
+        console.error('Failed to update URL parameters:', error);
+      }
+    }, 300); // 300ms debounce
   }
 }
 
